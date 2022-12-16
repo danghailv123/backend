@@ -5,7 +5,6 @@ import com.huce.doantotnghiep.config.Constants;
 import com.huce.doantotnghiep.layer.application.domain.dao.last.*;
 import com.huce.doantotnghiep.layer.application.domain.dao.old.IDiemTKHKDao;
 import com.huce.doantotnghiep.layer.application.domain.dao.old.IMonHocDao;
-
 import com.huce.doantotnghiep.layer.application.domain.dto.*;
 import com.huce.doantotnghiep.layer.application.domain.entity.last.*;
 import com.huce.doantotnghiep.layer.application.domain.entity.old.DiemOld;
@@ -26,8 +25,6 @@ public class SinhVienMapper {
 
     private final IMonHocDao iMonHocDao;
 
-    private final IDMMonHocDao idmMonHocDao;
-
     private final ITKBMonHoc itkbMonHoc;
     private final IDotDao iDotDao;
 
@@ -36,11 +33,10 @@ public class SinhVienMapper {
     private final IDMLopHocDao lopHocDao;
     private final IDiemTKHKDao iDiemTKHKDao;
 
-    public SinhVienMapper(CacheConfig cacheConfig, ITKBLopHocPhanDao itbkLopHocPhanDao, IMonHocDao iMonHocDao, IDMMonHocDao idmMonHocDao, ITKBMonHoc itkbMonHoc, IDotDao iDotDao, IDTTongKetDotDao idtTongKetDotDao, IDMLopHocDao lopHocDao, IDiemTKHKDao iDiemTKHKDao) {
+    public SinhVienMapper(CacheConfig cacheConfig, ITKBLopHocPhanDao itbkLopHocPhanDao, IMonHocDao iMonHocDao, ITKBMonHoc itkbMonHoc, IDotDao iDotDao, IDTTongKetDotDao idtTongKetDotDao, IDMLopHocDao lopHocDao, IDiemTKHKDao iDiemTKHKDao) {
         this.cacheConfig = cacheConfig;
         this.itbkLopHocPhanDao = itbkLopHocPhanDao;
         this.iMonHocDao = iMonHocDao;
-        this.idmMonHocDao = idmMonHocDao;
         this.itkbMonHoc = itkbMonHoc;
         this.iDotDao = iDotDao;
         this.idtTongKetDotDao = idtTongKetDotDao;
@@ -92,12 +88,17 @@ public class SinhVienMapper {
                         CompareSummary compareSummary = new CompareSummary();
                         compareSummary.setHk(hk);
                         compareSummary.setYear(year);
-                        compareSummary.setSummary(diemTKHK.getDtb()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtb().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getDtb().replace(" ","")):diemTKHK.getDtb().replace(" ",""):"0.0");
-                        compareSummary.setScore4(diemTKHK.getDtbs()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbs().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getDtbs().replace(" ","")):diemTKHK.getDtbs().replace(" ",""):"0.0");
-                        compareSummary.setScore4All(diemTKHK.getDtbtls()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbtls().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getDtbtls().replace(" ","")):diemTKHK.getDtbtls().replace(" ",""):"0.0");
-                        compareSummary.setSummaryAll(diemTKHK.getDtbtl()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbtl().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getDtbtl().replace(" ","")):diemTKHK.getDtbtl().replace(" ",""):"0.0");
-                        compareSummary.setTongSoTCHK(diemTKHK.getTcdthk()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getTcdthk().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getTcdthk().replace(" ","")):diemTKHK.getTcdthk().replace(" ",""):"0.0");
-                        compareSummary.setTongSoTCTL(diemTKHK.getTcdttl()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getTcdttl().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getTcdttl().replace(" ","")):diemTKHK.getTcdttl().replace(" ",""):"0.0");
+                        try {
+                            compareSummary.setSummary(diemTKHK.getDtb() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtb().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getDtb().replace(" ", "")) : diemTKHK.getDtb().replace(" ", "") : "0.0");
+                            compareSummary.setScore4(diemTKHK.getDtbs() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbs().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getDtbs().replace(" ", "")) : diemTKHK.getDtbs().replace(" ", "") : "0.0");
+                            compareSummary.setScore4All(diemTKHK.getDtbtls() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbtls().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getDtbtls().replace(" ", "")) : diemTKHK.getDtbtls().replace(" ", "") : "0.0");
+                            compareSummary.setSummaryAll(diemTKHK.getDtbtl() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbtl().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getDtbtl().replace(" ", "")) : diemTKHK.getDtbtl().replace(" ", "") : "0.0");
+                            compareSummary.setTongSoTCHK(diemTKHK.getTcdthk() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getTcdthk().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getTcdthk().replace(" ", "")) : diemTKHK.getTcdthk().replace(" ", "") : "0.0");
+                            compareSummary.setTongSoTCTL(diemTKHK.getTcdttl() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getTcdttl().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getTcdttl().replace(" ", "")) : diemTKHK.getTcdttl().replace(" ", "") : "0.0");
+                        } catch (Exception exception) {
+                            log.error(exception.getMessage(), exception);
+                            log.error(sinhVienOld.getMaSV());
+                        }
                         showCompareTest.setSemesterSummary(compareSummary);
                     }
                 } else {
@@ -106,17 +107,24 @@ public class SinhVienMapper {
                     DiemTKHK diemTKHK = iDiemTKHKDao.findDiemTKHKByMaSVAndNhhk(sinhVienOld.getMaSV(), diemOld.getNhHk());
                     compareSummary.setHk(hk);
                     compareSummary.setYear(year);
-                    compareSummary.setSummary(diemTKHK.getDtb()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtb().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getDtb().replace(" ","")):diemTKHK.getDtb().replace(" ",""):"0.0");
-                    compareSummary.setScore4(diemTKHK.getDtbs()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbs().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getDtbs().replace(" ","")):diemTKHK.getDtbs().replace(" ",""):"0.0");
-                    compareSummary.setScore4All(diemTKHK.getDtbtls()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbtls().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getDtbtls().replace(" ","")):diemTKHK.getDtbtls().replace(" ",""):"0.0");
-                    compareSummary.setSummaryAll(diemTKHK.getDtbtl()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbtl().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getDtbtl().replace(" ","")):diemTKHK.getDtbtl().replace(" ",""):"0.0");
-                    compareSummary.setTongSoTCHK(diemTKHK.getTcdthk()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getTcdthk().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getTcdthk().replace(" ","")):diemTKHK.getTcdthk().replace(" ",""):"0.0");
-                    compareSummary.setTongSoTCTL(diemTKHK.getTcdttl()!=null?Constants.CONVERT_SCORE.containsKey(diemTKHK.getTcdttl().replace(" ",""))?Constants.CONVERT_SCORE.get(diemTKHK.getTcdttl().replace(" ","")):diemTKHK.getTcdttl().replace(" ",""):"0.0");
+                    try {
+
+                        compareSummary.setSummary(diemTKHK.getDtb() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtb().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getDtb().replace(" ", "")) : diemTKHK.getDtb().replace(" ", "") : "0.0");
+                        compareSummary.setScore4(diemTKHK.getDtbs() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbs().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getDtbs().replace(" ", "")) : diemTKHK.getDtbs().replace(" ", "") : "0.0");
+                        compareSummary.setScore4All(diemTKHK.getDtbtls() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbtls().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getDtbtls().replace(" ", "")) : diemTKHK.getDtbtls().replace(" ", "") : "0.0");
+                        compareSummary.setSummaryAll(diemTKHK.getDtbtl() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getDtbtl().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getDtbtl().replace(" ", "")) : diemTKHK.getDtbtl().replace(" ", "") : "0.0");
+                        compareSummary.setTongSoTCHK(diemTKHK.getTcdthk() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getTcdthk().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getTcdthk().replace(" ", "")) : diemTKHK.getTcdthk().replace(" ", "") : "0.0");
+                        compareSummary.setTongSoTCTL(diemTKHK.getTcdttl() != null ? Constants.CONVERT_SCORE.containsKey(diemTKHK.getTcdttl().replace(" ", "")) ? Constants.CONVERT_SCORE.get(diemTKHK.getTcdttl().replace(" ", "")) : diemTKHK.getTcdttl().replace(" ", "") : "0.0");
+                    } catch (Exception exception) {
+                        log.error(exception.getMessage(), exception);
+                        log.error(sinhVienOld.getMaSV());
+                    }
                     showCompareTest.setSemesterSummary(compareSummary);
                 }
                 mapHK.put(hk, showCompareTest);
                 compare.put(year, mapHK);
             }
+
         }
         sinhVienCompareTest.setCompare(compare);
         return sinhVienCompareTest;
@@ -124,23 +132,28 @@ public class SinhVienMapper {
 
 
     public SinhVienCompareTest createSinhVienCompareTestNew(SinhVienNew sinhVienNew, List<DiemNew> diemNewList) {
-        String year = "unknown";
-        String hk = "unknown";
+        String year;
+        String hk;
         SinhVienCompareTest sinhVienCompareTest = new SinhVienCompareTest();
         sinhVienCompareTest.setMssv(sinhVienNew.getMaSinhVien());
         sinhVienCompareTest.setEmail(sinhVienNew.getEmail());
         sinhVienCompareTest.setNameClass(lopHocDao.getDMLopHocById(sinhVienNew.getIdLopHoc()).getTenLop());
         sinhVienCompareTest.setGender(Boolean.TRUE.equals(sinhVienNew.getGioiTinh()) ? "Nữ" : "Nam");
-        if (sinhVienNew.getNgaySinh() != null)
-            sinhVienCompareTest.setBirthday(sinhVienNew.getNgaySinh().substring(0, 6) + sinhVienNew.getNgaySinh().substring(sinhVienNew.getNgaySinh().length() - 2));
+        try {
+            if (sinhVienNew.getNgaySinh() != null)
+                sinhVienCompareTest.setBirthday(sinhVienNew.getNgaySinh().substring(0, 6) + sinhVienNew.getNgaySinh().substring(sinhVienNew.getNgaySinh().length() - 2));
+        } catch (Exception exception) {
+            sinhVienCompareTest.setBirthday(sinhVienNew.getNgaySinh());
+            log.error(exception.getMessage());
+        }
         sinhVienCompareTest.setName(sinhVienNew.getHoDem() + " " + sinhVienNew.getTen());
         Map<String, Map<String, ShowCompareTest>> compare = new HashMap<>();
         if (!diemNewList.isEmpty()) {
             for (DiemNew diemNew : diemNewList) {
                 CompareSubject compareSubject = new CompareSubject();
                 compareSubject.setSummary(diemNew.getDiemTongKet() == null ? "0.0" : diemNew.getDiemTongKet().toString().replace(" ", ""));
-                compareSubject.setScore4(diemNew.getDiemTinChi() == null ? "null" : diemNew.getDiemTinChi().toString().replace(" ", ""));
-                compareSubject.setScoreString(diemNew.getDiemChu() == null ? "null" : diemNew.getDiemChu().replace(" ", ""));
+                compareSubject.setScore4(diemNew.getDiemTinChi() == null ? "0.0" : diemNew.getDiemTinChi().toString().replace(" ", ""));
+                compareSubject.setScoreString(diemNew.getDiemChu() == null ? "0.0" : diemNew.getDiemChu().replace(" ", "").equals("") ? "0.0" : diemNew.getDiemChu().replace(" ", ""));
                 compareSubject.setQt(diemNew.getDiemChuyenCan() == null ? "0.0" : diemNew.getDiemChuyenCan().toString());
                 compareSubject.setKt(diemNew.getDiemThi() == null ? "0.0" : diemNew.getDiemThi().toString());
                 TKBLopHocPhan tkbLopHocPhan = itbkLopHocPhanDao.getTKBLopHocPhanById(diemNew.getIdLopHocPhan());
@@ -167,6 +180,11 @@ public class SinhVienMapper {
                             || compareSubject.getMaMonHoc().equals("480114")
                             || compareSubject.getMaMonHoc().equals("480107")
                             || compareSubject.getMaMonHoc().equals("480106")
+                            || compareSubject.getMaMonHoc().equals("430101")
+                            || compareSubject.getMaMonHoc().equals("430102")
+                            || compareSubject.getMaMonHoc().equals("430103")
+                            || compareSubject.getMaMonHoc().equals("430104")
+                            || compareSubject.getMaMonHoc().equals("430105")
                             || compareSubject.getMaMonHoc().equals("480109")) {
                         compareSubject.setTc("0.0");
                     } else
@@ -188,12 +206,18 @@ public class SinhVienMapper {
                             if (dtTongKetDot != null) {
                                 compareSummary.setHk(hk);
                                 compareSummary.setYear(year);
-                                compareSummary.setSummary(dtTongKetDot.getDiemTBHocLuc()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBHocLuc().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBHocLuc().toString()):String.format("%.2f",(double)dtTongKetDot.getDiemTBHocLuc()):"0.0");
-                                compareSummary.setScore4(dtTongKetDot.getDiemTBTinChi()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBTinChi().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBTinChi().toString()):String.format("%.2f",(double)dtTongKetDot.getDiemTBTinChi()):"0.0");
-                                compareSummary.setScore4All(dtTongKetDot.getDiemTBTinChiTichLuy()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBTinChiTichLuy().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBTinChiTichLuy().toString()):String.format("%.2f",(double)dtTongKetDot.getDiemTBTinChiTichLuy()):"0.0");
-                                compareSummary.setSummaryAll(dtTongKetDot.getDiemTBHocLucTichLuy()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBHocLucTichLuy().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBHocLucTichLuy().toString()):String.format("%.2f",(double)dtTongKetDot.getDiemTBHocLucTichLuy()):"0.0");
-                                compareSummary.setTongSoTCHK(dtTongKetDot.getSoTCTichLuyHK()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getSoTCTichLuyHK().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getSoTCTichLuyHK().toString()):(float)dtTongKetDot.getSoTCTichLuyHK()+"":"0.0");
-                                compareSummary.setTongSoTCTL(dtTongKetDot.getSoTCTichLuy()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getSoTCTichLuy().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getSoTCTichLuy().toString()):(float)dtTongKetDot.getSoTCTichLuy()+"":"0.0");
+                                try {
+
+                                    compareSummary.setSummary(dtTongKetDot.getDiemTBHocLuc() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBHocLuc().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBHocLuc().toString()) : String.format("%.2f", (double) dtTongKetDot.getDiemTBHocLuc()) : "0.0");
+                                    compareSummary.setScore4(dtTongKetDot.getDiemTBTinChi() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBTinChi().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBTinChi().toString()) : String.format("%.2f", (double) dtTongKetDot.getDiemTBTinChi()) : "0.0");
+                                    compareSummary.setScore4All(dtTongKetDot.getDiemTBTinChiTichLuy() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBTinChiTichLuy().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBTinChiTichLuy().toString()) : String.format("%.2f", (double) dtTongKetDot.getDiemTBTinChiTichLuy()) : "0.0");
+                                    compareSummary.setSummaryAll(dtTongKetDot.getDiemTBHocLucTichLuy() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBHocLucTichLuy().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBHocLucTichLuy().toString()) : String.format("%.2f", (double) dtTongKetDot.getDiemTBHocLucTichLuy()) : "0.0");
+                                    compareSummary.setTongSoTCHK(dtTongKetDot.getSoTCTichLuyHK() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getSoTCTichLuyHK().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getSoTCTichLuyHK().toString()) : (float) dtTongKetDot.getSoTCTichLuyHK() + "" : "0.0");
+                                    compareSummary.setTongSoTCTL(dtTongKetDot.getSoTCTichLuy() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getSoTCTichLuy().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getSoTCTichLuy().toString()) : (float) dtTongKetDot.getSoTCTichLuy() + "" : "0.0");
+                                } catch (Exception exception) {
+                                    log.error(exception.getMessage(), exception);
+                                    log.error(sinhVienNew.getMaSinhVien());
+                                }
                                 showCompareTest.setSemesterSummary(compareSummary);
                             }
                         }
@@ -204,12 +228,17 @@ public class SinhVienMapper {
                         if (dtTongKetDot != null) {
                             compareSummary.setHk(hk);
                             compareSummary.setYear(year);
-                            compareSummary.setSummary(dtTongKetDot.getDiemTBHocLuc()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBHocLuc().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBHocLuc().toString()):String.format("%.2f",(double)dtTongKetDot.getDiemTBHocLuc()):"0.0");
-                            compareSummary.setScore4(dtTongKetDot.getDiemTBTinChi()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBTinChi().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBTinChi().toString()):String.format("%.2f",(double)dtTongKetDot.getDiemTBTinChi()):"0.0");
-                            compareSummary.setScore4All(dtTongKetDot.getDiemTBTinChiTichLuy()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBTinChiTichLuy().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBTinChiTichLuy().toString()):String.format("%.2f",(double)dtTongKetDot.getDiemTBTinChiTichLuy()):"0.0");
-                            compareSummary.setSummaryAll(dtTongKetDot.getDiemTBHocLucTichLuy()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBHocLucTichLuy().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBHocLucTichLuy().toString()):String.format("%.2f",(double)dtTongKetDot.getDiemTBHocLucTichLuy()):"0.0");
-                            compareSummary.setTongSoTCHK(dtTongKetDot.getSoTCTichLuyHK()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getSoTCTichLuyHK().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getSoTCTichLuyHK().toString()):(float)dtTongKetDot.getSoTCTichLuyHK()+"":"0.0");
-                            compareSummary.setTongSoTCTL(dtTongKetDot.getSoTCTichLuy()!=null?Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getSoTCTichLuy().toString())?Constants.CONVERT_SCORE.get(dtTongKetDot.getSoTCTichLuy().toString()):(float)dtTongKetDot.getSoTCTichLuy()+"":"0.0");
+                            try {
+                                compareSummary.setSummary(dtTongKetDot.getDiemTBHocLuc() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBHocLuc().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBHocLuc().toString()) : String.format("%.2f", (double) dtTongKetDot.getDiemTBHocLuc()) : "0.0");
+                                compareSummary.setScore4(dtTongKetDot.getDiemTBTinChi() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBTinChi().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBTinChi().toString()) : String.format("%.2f", (double) dtTongKetDot.getDiemTBTinChi()) : "0.0");
+                                compareSummary.setScore4All(dtTongKetDot.getDiemTBTinChiTichLuy() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBTinChiTichLuy().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBTinChiTichLuy().toString()) : String.format("%.2f", (double) dtTongKetDot.getDiemTBTinChiTichLuy()) : "0.0");
+                                compareSummary.setSummaryAll(dtTongKetDot.getDiemTBHocLucTichLuy() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getDiemTBHocLucTichLuy().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getDiemTBHocLucTichLuy().toString()) : String.format("%.2f", (double) dtTongKetDot.getDiemTBHocLucTichLuy()) : "0.0");
+                                compareSummary.setTongSoTCHK(dtTongKetDot.getSoTCTichLuyHK() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getSoTCTichLuyHK().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getSoTCTichLuyHK().toString()) : (float) dtTongKetDot.getSoTCTichLuyHK() + "" : "0.0");
+                                compareSummary.setTongSoTCTL(dtTongKetDot.getSoTCTichLuy() != null ? Constants.CONVERT_SCORE.containsKey(dtTongKetDot.getSoTCTichLuy().toString()) ? Constants.CONVERT_SCORE.get(dtTongKetDot.getSoTCTichLuy().toString()) : (float) dtTongKetDot.getSoTCTichLuy() + "" : "0.0");
+                            } catch (Exception exception) {
+                                log.error(exception.getMessage(), exception);
+                                log.error(sinhVienNew.getMaSinhVien());
+                            }
                             showCompareTest.setSemesterSummary(compareSummary);
                         }
                     }

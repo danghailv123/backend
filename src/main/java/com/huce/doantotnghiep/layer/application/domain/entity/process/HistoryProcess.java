@@ -7,27 +7,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Entity(name = "process_compare")
-public class ProcessCompare {
+@Entity(name = "history_process")
+public class HistoryProcess {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "mssv")
-    private String mssv;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "created_time")
+    private Long createdTime;
 
-    @Column(name = "is_compare")
-    private Boolean isCompare;
+    @Column(name = "status")
+    private Integer status;
 
-    @Column(name = "job_id")
-    private Integer jobId;
+    @Column(name = "total")
+    private Integer total;
+
 }

@@ -4,7 +4,6 @@ import com.huce.doantotnghiep.layer.application.domain.dao.process.IProcessCompa
 import com.huce.doantotnghiep.layer.application.domain.dto.ListCompareShow;
 import com.huce.doantotnghiep.layer.application.domain.entity.process.ProcessCompare;
 import com.huce.doantotnghiep.layer.application.service.IProcessCompareService;
-import com.huce.doantotnghiep.utility.response.ResultResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +19,10 @@ public class ProcessCompareService implements IProcessCompareService {
     }
 
     @Override
-    public ListCompareShow getList(Integer page, Integer size) {
+    public ListCompareShow getList(Integer id, Integer page, Integer size, String keyword) {
         Sort sort = Sort.by(Sort.Direction.DESC, "isCompare");
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<ProcessCompare> processCompares = iProcessCompareDao.findAll(pageable);
+        Page<ProcessCompare> processCompares = iProcessCompareDao.getAllByJobIdAndMssvLike(id,keyword+"%",pageable);
         ListCompareShow listCompareShow = new ListCompareShow();
         listCompareShow.setCompareShows(processCompares.getContent());
         listCompareShow.setSize(size);

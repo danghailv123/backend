@@ -16,6 +16,7 @@ public class Constants {
     public static ObjectMapper SERIALIZER = new ObjectMapper();
 
     public static Map<String, String> CONVERT_SCORE = new HashMap<>();
+    public static Map<Integer, String> STATUS = new HashMap<>();
     public static List<Future<List<ProcessCompare>>> jobSubmit = new ArrayList<>();
 
     static {
@@ -30,6 +31,10 @@ public class Constants {
         CONVERT_SCORE.put("QC","0.0");
         CONVERT_SCORE.put("K","0.0");
         CONVERT_SCORE.put("R","0.0");
+
+        STATUS.put(1,"SUCCESS");
+        STATUS.put(0,"IN PROCESS");
+        STATUS.put(-1,"ERROR");
     }
 
 }

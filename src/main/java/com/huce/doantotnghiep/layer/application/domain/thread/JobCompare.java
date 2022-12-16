@@ -2,7 +2,6 @@ package com.huce.doantotnghiep.layer.application.domain.thread;
 
 import com.huce.doantotnghiep.layer.application.domain.dao.process.IProcessCompareDao;
 import com.huce.doantotnghiep.layer.application.domain.dto.CompareShow;
-import com.huce.doantotnghiep.layer.application.domain.entity.last.SinhVienNew;
 import com.huce.doantotnghiep.layer.application.domain.entity.process.ProcessCompare;
 import com.huce.doantotnghiep.layer.application.service.ICompareSinhVien;
 import lombok.extern.slf4j.Slf4j;
@@ -17,34 +16,33 @@ public class JobCompare implements Callable<List<ProcessCompare>> {
     private ICompareSinhVien compareSinhVien;
     private Integer page;
 
+    private Integer jobId;
     private IProcessCompareDao iProcessCompareDao;
 
-    public JobCompare(List<String> listSinhVien, ICompareSinhVien compareSinhVien, Integer page, IProcessCompareDao iProcessCompareDao) {
+    public JobCompare(List<String> listSinhVien, ICompareSinhVien compareSinhVien, Integer page, IProcessCompareDao iProcessCompareDao, Integer jobId) {
         this.listSinhVien = listSinhVien;
         this.compareSinhVien = compareSinhVien;
         this.page = page;
         this.iProcessCompareDao = iProcessCompareDao;
+        this.jobId = jobId;
     }
 
     @Override
     public List<ProcessCompare> call() throws Exception {
         log.info(Thread.currentThread().getName() + " start job:" + page);
         List<ProcessCompare> processCompares = new ArrayList<>();
-        Integer i = 1;
         for (String sinhVienNew : listSinhVien) {
             try {
-                //TODO
                 ProcessCompare processCompare = new ProcessCompare();
                 CompareShow compareShow = compareSinhVien.isCompareSinhVien(sinhVienNew);
                 processCompare.setIsCompare(compareShow.isCompare());
                 processCompare.setMssv(sinhVienNew);
-                processCompare.setName(compareShow.tile);
-
+                processCompare.setTitle(compareShow.tile);
+                processCompare.setJobId(this.jobId);
                 processCompares.add(iProcessCompareDao.save(processCompare));
             } catch (Exception exception) {
                 log.error(sinhVienNew);
             }
-            i++;
         }
         log.info(Thread.currentThread().getName() + " end job:" + page);
         return processCompares;
