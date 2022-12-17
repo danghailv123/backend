@@ -94,10 +94,10 @@ public class SubmitJobCompare implements ISubmitJobCompare {
         int size = data.size();
         int page = 0;
         while (true) {
-            List<String> listProcess = data.subList(page * 200, Math.min((page + 1) * 200, size));
+            List<String> listProcess = data.subList(page * 30, Math.min((page + 1) * 30, size));
             JobCompare jobCompare = new JobCompare(listProcess, compareSinhVien, page, iProcessCompareDao, id);
             Constants.jobSubmit.add(executor.submit(jobCompare));
-            if (listProcess.isEmpty() || size < (page + 1) * 200) return;
+            if (listProcess.isEmpty() || size < (page + 1) * 30) return;
             page++;
         }
 

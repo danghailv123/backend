@@ -43,8 +43,6 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-
-
 //        System.out.println(compareSinhVien.isCompareSinhVien("59463"));
 
 //        compareSinhVien.isCompareSinhVien("213347");

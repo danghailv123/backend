@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.huce.doantotnghiep.config.Constants;
 import com.huce.doantotnghiep.layer.application.domain.dto.*;
 import com.huce.doantotnghiep.layer.application.domain.model.InfoSheet;
-import com.huce.doantotnghiep.layer.application.domain.model.ResponseSheet;
 import com.huce.doantotnghiep.layer.application.service.ICompareSinhVien;
 import com.huce.doantotnghiep.layer.application.service.IGoogleSheetService;
 import com.huce.doantotnghiep.layer.application.service.ISinhVienNewService;
@@ -42,9 +41,14 @@ public class ComparSinhVien implements ICompareSinhVien {
         SinhVienCompareTest old = iSinhVienOldService.getSinhView(mssv);
         SinhVienCompareTest last = iSinhVienNewService.getSinhView(mssv);
         CompareShow compareShow = new CompareShow();
-        if (old == null || last == null) {
+        if (old == null) {
             compareShow.setCompare(false);
-            compareShow.setTile("Không tồn tại trong database mới hoặc cũ");
+            compareShow.setTile("Không tồn tại trong database cũ");
+            return compareShow;
+        }
+        if (last == null) {
+            compareShow.setCompare(false);
+            compareShow.setTile("Không tồn tại trong database mới");
             return compareShow;
         }
         try {
